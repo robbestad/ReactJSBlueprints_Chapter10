@@ -4,6 +4,8 @@ Create a game in canvas with React
 
 # Demo
 
+http://reactjsblueprints-chapter10.herokuapp.com
+
 # Install
 
 - git clone
