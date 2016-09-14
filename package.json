@@ -1,0 +1,55 @@
+{
+  "name": "ReactJS_BluePrints_Chapter10",
+  "version": "1.0.0",
+  "description": "ReactJS Blueprints Chapter 10 code",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "assets": "shjs scripts/assets.js",
+    "prestart": "npm run assets",
+    "start": "cross-env NODE_ENV=production npm run build",
+    "poststart": "cross-env NODE_ENV=production node server-production.js",
+    "dev": "node server-development.js",
+    "build": "cross-env NODE_ENV=production webpack --config webpack-production.config.js",
+    "predeploy": "npm run assets & npm run build",
+    "deploy": "git commit -am'heroku' && git push heroku master"
+  },
+  "author": {
+    "name": "Sven Anders Robbestad",
+    "email": "sven@robbestad.com",
+    "url": "http://www.robbestad.com"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.3.26",
+    "babel-loader": "^6.2.0",
+    "babel-plugin-react-transform": "^2.0.0",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "css-loader": "^0.23.1",
+    "html-webpack-plugin": "^2.9.0",
+    "node-sass": "^3.4.2",
+    "react": "^15.1.0",
+    "react-dom": "^15.1.0",
+    "react-transform-catch-errors": "^1.0.1",
+    "react-transform-hmr": "^1.0.1",
+    "redbox-react": "^1.2.0",
+    "sass-loader": "^3.1.2",
+    "shelljs": "^0.6.0",
+    "style-loader": "^0.13.0",
+    "webpack": "^1.12.9",
+    "webpack-dev-middleware": "^1.4.0",
+    "webpack-hot-middleware": "^2.6.0"
+  },
+  "dependencies": {
+    "compression": "^1.6.1",
+    "cp-file": "^3.1.0",
+    "cross-env": "^1.0.8",
+    "envs": "^0.1.6",
+    "express": "^4.13.3",
+    "express-error-handler": "^1.0.1",
+    "path": "^0.12.7",
+    "rimraf": "^2.5.1",
+    "serve-static": "^1.10.3"
+  }
+}
