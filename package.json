@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "ReactJS Blueprints Chapter 10 code",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/svenanders/ReactJSBlueprints_Chapter10"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "assets": "shjs scripts/assets.js",
