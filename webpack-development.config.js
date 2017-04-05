@@ -1,41 +1,105 @@
-var path = require('path');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack')
+const path = require('path')
+const HtmlWebpackPlugin = require("html-webpack-plugin")
+const CopyWebpackPlugin = require("copy-webpack-plugin")
+const isProd = process.env.NODE_ENV === "production"
 
 module.exports = {
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'eval',
   entry: [
+    "webpack/hot/only-dev-server",
     'webpack-hot-middleware/client',
+    'react-hot-loader/patch',
     './source/index'
   ],
   output: {
-    path: path.join(__dirname, 'assets'),
-    filename: 'bundle.js'
+    filename: "[name]-[hash:8].js",
+    path: path.join(__dirname, "build"),
+    publicPath: "/",
+    chunkFilename: "[name]-[chunkhash].js"
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
+    new CopyWebpackPlugin(
+      [
+        {from: "assets", to: "./"}
+      ],
+      {ignore: ["**/*.css"]},
+      {copyUnmodified: isProd}
+    ),
     new HtmlWebpackPlugin({
-      title: "A Wizard's Picnic",
-      template: 'index.ejs',
-      hash: true,
-      inject: 'body'
+      title: 'Wizrds',
+      template: "index.hbs",
+      env: "development",
+      version: require(path.join(__dirname, 'package.json')).version,
+      inject: true,
+      cache: false,
+      appMountId: "root",
+      minify: {
+        removeComments: isProd,
+        collapseWhitespace: isProd,
+        conservativeCollapse: isProd,
+        minifyJS: isProd,
+        minifyCSS: isProd
+      }
     })
   ],
   module: {
-    loaders: [{
-      tests: /\.js?$/,
-      loaders: ['babel'],
-      include: path.join(__dirname, 'source')
-    },
-    {
-          test: /\.scss$/,
-          loader: 'style!css!sass'
+    noParse: /\.min\.js/,
+    rules: [
+      {
+        test: /\.jsx?$/,
+        loader: 'babel-loader',
+        include: path.resolve('./source'),
+        query: {
+          presets: [
+            "react",
+            "es2015"
+          ],
+          plugins: [
+            "react-hot-loader/babel",
+            "transform-flow-strip-types",
+            [
+              "react-transform",
+              {
+                transforms: [
+                  {
+                    "transform": "react-transform-hmr",
+                    "imports": [
+                      "react"
+                    ],
+                    "locals": [
+                      "module"
+                    ]
+                  },
+                  {
+                    "transform": "react-transform-catch-errors",
+                    "imports": [
+                      "react",
+                      "redbox-react"
+                    ]
+                  }
+                ]
+              }
+            ]
+          ]
         }
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.scss$/,
+        use: ['style-loader', 'css-loader', 'sass-loader']
+      }
     ]
   },
+  performance: {
+    hints: false
+  },
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['.js', '.jsx']
   }
-};
-
+}
