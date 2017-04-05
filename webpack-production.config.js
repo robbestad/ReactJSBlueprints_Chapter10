@@ -1,19 +1,29 @@
 'use strict';
 
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var path = require('path');
-var webpack = require('webpack');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   entry: [
     './source/index'
   ],
   output: {
-    path: path.join(__dirname, 'public', 'assets'),
-    filename: 'bundle.js'
+    filename: "[name]-[hash:8].js",
+    path: path.join(__dirname, "public"),
+    publicPath: "/",
+    chunkFilename: "[name]-[chunkhash].js"
   },
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new CopyWebpackPlugin(
+      [
+        {from: "assets", to: "./"}
+      ],
+      {ignore: ["**/*.css"]},
+      {copyUnmodified: true}
+    ),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('production')
@@ -26,25 +36,41 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       title: "A Wizard's Picnic",
-      template: 'index.ejs',
-      hash: true,
-      inject: 'body'
+      template: "index.hbs",
+      inject: true,
+      cache: false,
+      appMountId: "root",
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        conservativeCollapse: true,
+        minifyJS: true,
+        minifyCSS: true
+      }
     })
-
   ],
   module: {
-    loaders: [{
-      tests: /\.js?$/,
-      loaders: ['babel'],
-      include: path.join(__dirname, 'source')
-    },{
-      test: /\.scss$/,
-      loader: 'style!css!sass'
-    }
+    noParse: /\.min\.js/,
+    rules: [
+      {
+        test: /\.jsx?$/,
+        use: 'babel-loader',
+        include: path.resolve('./source')
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.scss$/,
+        use: ['style-loader', 'css-loader', 'sass-loader']
+      }
     ]
   },
+  performance: {
+    hints: false
+  },
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['.js', '.jsx']
   }
-};
-
+}

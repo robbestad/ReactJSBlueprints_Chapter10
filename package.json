@@ -15,7 +15,7 @@
     "poststart": "cross-env NODE_ENV=production node server-production.js",
     "predev": "rimraf build",
     "dev": "NODE_ENV=development node server-development.js",
-    "build": "cross-env NODE_ENV=production webpack --config webpack-production.config.js",
+    "build": "cross-env NODE_ENV=production webpack -p --config webpack-production.config.js",
     "predeploy": "npm run assets & npm run build",
     "deploy": "git commit -am'heroku' && git push heroku master"
   },
