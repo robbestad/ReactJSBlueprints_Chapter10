@@ -1,35 +1,33 @@
 import './style.scss';
 import polyfill from './polyfills';
 import Config from './config';
-import React, { Component, PropTypes } from 'react';
+import React, {Component, PropTypes} from 'react';
 import Game from './engine';
 import keypress from './components/keypress/index';
 
 //http://opengameart.org/content/roguelikerpg-pack-1700-tiles
 //http://opengameart.org/content/dungeon-crawl-32x32-tiles
 class Title extends Component {
-  constructor(){
+  constructor() {
     super();
     this.last = Date.now();
-    this.keys={};
+    this.keys = {};
   }
 
-  keyInput(
-    keys
-  ){
+  keyInput(keys) {
     // Space
     if (keypress.space(keys)) {
       this.props.cb("game");
     }
   }
 
-  updateGame(modifier){
+  updateGame(modifier) {
     // Avoid updating the game if the
     // canvas has not yet been initalized
-    if(typeof this.refs.canvas ==="undefined")
+    if (typeof this.refs.canvas === "undefined")
       return;
 
-    const { canvas } = this.refs;
+    const {canvas} = this.refs;
     const ctx = canvas.getContext("2d");
 
     Game.loadImage(
@@ -43,9 +41,9 @@ class Title extends Component {
   }
 
 
-  componentDidMount(){
+  componentDidMount() {
     Game.keyboard(this.keys);
-    const gameLoop = () =>{
+    const gameLoop = () => {
       var now = Date.now();
       var delta = now - this.last;
       this.updateGame(delta / 1000);
@@ -56,28 +54,29 @@ class Title extends Component {
 
   }
 
-  render(){
-    return <div><canvas
-      ref="canvas"
-      id={ Config.id || "canvas" }
-      height={ Config.height }
-      width={ Config.width } >
-      Sorry, your browser doesn't
-      support canvas
-    </canvas>
- <br/>
+  render() {
+    return <div>
+      <canvas
+        ref="canvas"
+        id={ Config.id || "canvas" }
+        height={ Config.height }
+        width={ Config.width }>
+        Sorry, your browser doesn't
+        support canvas
+      </canvas>
+      <br/>
       <div className="info">
-      You're a wizard. You're on a picnic.
-      <br/>
-      You hear a noise...
-      <br/>
-      <br/>
-      <a href="https://www.packtpub.com/web-development/reactjs-blueprints">
-        Full source available here
-      </a>
+        You're a wizard. You're on a picnic.
+        <br/>
+        You hear a noise...
+        <br/>
+        <br/>
+        <a href="https://www.packtpub.com/web-development/reactjs-blueprints">
+          Full source available here
+        </a>
       </div>
 
-  </div>
+    </div>
   }
 
 }
