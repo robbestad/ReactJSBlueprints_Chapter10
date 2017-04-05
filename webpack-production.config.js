@@ -1,14 +1,10 @@
-'use strict';
-
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-  entry: [
-    './source/index'
-  ],
+  entry: './source/index',
   output: {
     filename: "[name]-[hash:8].js",
     path: path.join(__dirname, "public"),
@@ -21,8 +17,7 @@ module.exports = {
       [
         {from: "assets", to: "./"}
       ],
-      {ignore: ["**/*.css"]},
-      {copyUnmodified: true}
+      {ignore: ["**/*.css"]}, {copyUnmodified: true}
     ),
     new webpack.DefinePlugin({
       'process.env': {
@@ -38,6 +33,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: "A Wizard's Picnic",
       template: "index.hbs",
+      env: "production",
+      version: require(path.join(__dirname, 'package.json')).version,
       inject: true,
       cache: false,
       appMountId: "root",
@@ -59,10 +56,11 @@ module.exports = {
         include: path.resolve('./source'),
         query: {
           presets: [
-            "react",
-            "es2015"
+            'react',
+            'es2015'
           ],
-          plugins: []
+          plugins: [
+          ]
         }
       },
       {

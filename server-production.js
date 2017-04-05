@@ -17,11 +17,6 @@ app.get("*", (req, res) => {
 
 server = http.createServer(app);
 
-app.use((err, req, res, next) => {
-  debug('http')(err);
-  next(err);
-});
-
 app.use(errorHandler({server}));
 
 app.listen(port, host, () => {

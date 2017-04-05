@@ -1,8 +1,8 @@
-const webpack = require('webpack');
-const path = require('path');
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
-const isProd = process.env.NODE_ENV === "production";
+const webpack = require('webpack')
+const path = require('path')
+const HtmlWebpackPlugin = require("html-webpack-plugin")
+const CopyWebpackPlugin = require("copy-webpack-plugin")
+const isProd = process.env.NODE_ENV === "production"
 
 module.exports = {
   devtool: 'eval',
@@ -31,6 +31,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Wizrds',
       template: "index.hbs",
+      env: "development",
+      version: require(path.join(__dirname, 'package.json')).version,
       inject: true,
       cache: false,
       appMountId: "root",
