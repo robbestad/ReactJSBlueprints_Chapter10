@@ -33,7 +33,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: "A Wizard's Picnic",
       template: "index.hbs",
-      env: "production",
       version: require(path.join(__dirname, 'package.json')).version,
       inject: true,
       cache: false,

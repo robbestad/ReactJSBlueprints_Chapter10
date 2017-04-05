@@ -2,7 +2,7 @@ import './style.scss';
 import polyfill from './polyfills';
 import React, {Component, PropTypes} from 'react';
 import {render} from 'react-dom';
-import App from './App';
+import App from './app';
 const rootEl = document.getElementById('app');
 
 const renderApp = (Component = App) => render(
@@ -10,10 +10,8 @@ const renderApp = (Component = App) => render(
   rootEl
 );
 
-if (env && env === "development") {
-  if (module.hot) {
-    module.hot.accept('./', () => renderApp());
-  }
+if (module.hot) {
+  module.hot.accept('./', () => renderApp());
 }
 
 renderApp();

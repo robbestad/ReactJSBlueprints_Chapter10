@@ -31,7 +31,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Wizrds',
       template: "index.hbs",
-      env: "development",
       version: require(path.join(__dirname, 'package.json')).version,
       inject: true,
       cache: false,

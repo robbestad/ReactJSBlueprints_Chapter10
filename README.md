@@ -1,13 +1,18 @@
-# Code for Chapter 10 ReactJS Blueprints
+# Chapter 10 ReactJS Blueprints
 
 Create a game in canvas with React
 
-# Version 1.0
+![Start the game](screenshot.png)
+
+## Version 1.0
 
 The code from the book is available in tag v1.0
 
+## Version 2.0
+
 The current code in the master branch is updated 
 to using webpack 2
+
 The current code also uses yarn rather than _npm
 shrinkwrap_
 
