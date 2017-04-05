@@ -48,8 +48,41 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        use: 'babel-loader',
-        include: path.resolve('./source')
+        loader: 'babel-loader',
+        include: path.resolve('./source'),
+        query: {
+          presets: [
+            "react",
+            "es2015"
+          ],
+          plugins: [
+            "react-hot-loader/babel",
+            "transform-flow-strip-types",
+            [
+              "react-transform",
+              {
+                transforms: [
+                  {
+                    "transform": "react-transform-hmr",
+                    "imports": [
+                      "react"
+                    ],
+                    "locals": [
+                      "module"
+                    ]
+                  },
+                  {
+                    "transform": "react-transform-catch-errors",
+                    "imports": [
+                      "react",
+                      "redbox-react"
+                    ]
+                  }
+                ]
+              }
+            ]
+          ]
+        }
       },
       {
         test: /\.css$/,

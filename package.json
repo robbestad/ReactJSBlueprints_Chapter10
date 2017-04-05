@@ -9,13 +9,11 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "assets": "shjs scripts/assets.js",
-    "prestart": "npm run assets",
-    "start": "cross-env NODE_ENV=production npm run build",
-    "poststart": "cross-env NODE_ENV=production node server-production.js",
+    "prestart": "rimraf public",
+    "start": "cross-env NODE_ENV=production webpack -p --config webpack-production.config.js",
+    "poststart": "cross-env DEBUG=http NODE_ENV=production node server-production.js",
     "predev": "rimraf build",
     "dev": "NODE_ENV=development node server-development.js",
-    "build": "cross-env NODE_ENV=production webpack -p --config webpack-production.config.js",
     "predeploy": "npm run assets & npm run build",
     "deploy": "git commit -am'heroku' && git push heroku master"
   },

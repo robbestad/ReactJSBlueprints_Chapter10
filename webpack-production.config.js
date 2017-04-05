@@ -26,7 +26,8 @@ module.exports = {
     ),
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify('production')
+        'NODE_ENV': JSON.stringify('production'),
+        'BABEL_ENV': JSON.stringify('production')
       }
     }),
     new webpack.optimize.UglifyJsPlugin({
@@ -54,8 +55,15 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        use: 'babel-loader',
-        include: path.resolve('./source')
+        loader: 'babel-loader',
+        include: path.resolve('./source'),
+        query: {
+          presets: [
+            "react",
+            "es2015"
+          ],
+          plugins: []
+        }
       },
       {
         test: /\.css$/,

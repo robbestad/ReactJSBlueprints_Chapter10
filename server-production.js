@@ -6,22 +6,24 @@ const path = require("path");
 const compression = require("compression");
 const http = require("http");
 const errorHandler = require('express-error-handler');
+const debug = require('debug');
 
 app.use(compression());
 
-app.get("*", function (req, res) {
+app.get("*", (req, res) => {
+  debug('http')(req.path)
   res.sendFile(path.join(__dirname, "public", req.path));
-});
+})
 
 server = http.createServer(app);
 
-app.use(function (err, req, res, next) {
-  console.log(err);
+app.use((err, req, res, next) => {
+  debug('http')(err);
   next(err);
 });
 
-app.use(errorHandler({server: server}));
+app.use(errorHandler({server}));
 
-app.listen(port, host, function () {
-  console.log('Server started at http://' + host + ':' + port);
+app.listen(port, host, () => {
+  debug('http')(`Server started at http://${host}:${port}`);
 });
