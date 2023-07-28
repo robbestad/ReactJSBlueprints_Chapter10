@@ -28,4 +28,4 @@ app.use(devMiddleware(compiler, {
   headers: { "Access-Control-Allow-Origin": "*" }
 }))
 
-app.listen(8080)
+app.listen(8280)
